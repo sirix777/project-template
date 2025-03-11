@@ -1,0 +1,10 @@
+/.idea/
+/.phpcs-cache
+/.psalm-cache
+/.phpunit.cache
+/clover.xml
+/coveralls-upload.json
+/phpunit.xml
+/vendor/
+.php-cs-fixer.cache
+.deptrac.cache

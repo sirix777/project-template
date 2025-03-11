@@ -1,0 +1,115 @@
+{
+    "name": "sirix/project-template",
+    "description": "Sirix Template for Microservices",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sirix",
+            "homepage": "https://github.com/sirix777"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "~8.4.0",
+        "cakephp/chronos": "^3.1",
+        "composer/package-versions-deprecated": "^1.10.99",
+        "enqueue/amqp-lib": "^0.10.19",
+        "enqueue/rdkafka": "^0.10.20",
+        "guzzlehttp/guzzle": "^7.9",
+        "laminas/laminas-cli": "^1.11",
+        "laminas/laminas-component-installer": "^3.5",
+        "laminas/laminas-config-aggregator": "^1.17",
+        "laminas/laminas-diactoros": "^3.5.0",
+        "laminas/laminas-servicemanager": "^3.23",
+        "laminas/laminas-stdlib": "^3.20",
+        "mezzio/mezzio": "^3.20",
+        "mezzio/mezzio-helpers": "^5.17",
+        "mezzio/mezzio-laminasrouter": "^3.10",
+        "sirix/cycle-orm-factory": "^2.0",
+        "sirix/money": "^1.0",
+        "sirix/monolog": "^1.0",
+        "sirix/sirix-config": "^1.0",
+        "symfony/cache": "^7.2",
+        "vjik/cycle-typecast": "^2.2",
+        "yiisoft/validator": "^2.1"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.45",
+        "filp/whoops": "^2.16",
+        "laminas/laminas-development-mode": "^3.13.0",
+        "mezzio/mezzio-tooling": "2.10.x-dev",
+        "phpunit/phpunit": "^11.5",
+        "qossmic/deptrac": "^2.0",
+        "roave/security-advisories": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "ApiGateway\\": "src/ApiGateway/src/",
+            "Common\\": "src/Common/src/",
+            "ExampleModule\\": "src/Module/ExampleModule/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ApiGatewayTest\\": "test/ApiGatewayTest/",
+            "CommonTest\\": "test/CommonTest/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "ergebnis/composer-normalize": true,
+            "laminas/laminas-component-installer": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "laminas": {
+            "component-whitelist": [
+                "mezzio/mezzio-helpers",
+                "laminas/laminas-httphandlerrunner"
+            ]
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@clear-config-cache",
+            "if [ ! -d \"tools/php-cs-fixer/vendor\" ]; then composer install --working-dir=tools/php-cs-fixer; fi",
+            "if [ ! -d \"tools/phpstan/vendor\" ]; then composer install --working-dir=tools/phpstan; fi",
+            "if [ ! -d \"tools/rector/vendor\" ]; then composer install --working-dir=tools/rector; fi"
+        ],
+        "post-update-cmd": "@clear-config-cache",
+        "post-create-project-cmd": [
+            "@development-enable"
+        ],
+        "check": [
+            "@cs-check",
+            "@rector",
+            "@phpstan",
+            "@deptrac-layers",
+            "@deptrac-modules",
+            "@test"
+        ],
+        "clear-config-cache": "php bin/clear-config-cache.php",
+        "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run -vvv --diff",
+        "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -vvv",
+        "deptrac-layers": "php vendor/bin/deptrac analyse --config-file=deptrac-layers.yaml",
+        "deptrac-modules": "php vendor/bin/deptrac analyse --config-file=deptrac-modules.yaml",
+        "development-disable": "laminas-development-mode disable",
+        "development-enable": "laminas-development-mode enable",
+        "development-status": "laminas-development-mode status",
+        "mezzio": "laminas --ansi",
+        "phpstan": "php tools/phpstan/vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=2G",
+        "rector": "php tools/rector/vendor/bin/rector process --dry-run --xdebug --memory-limit=2G",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -S 0.0.0.0:8080 -t public/"
+        ],
+        "test": "php vendor/bin/phpunit --testdox",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+    },
+    "scripts-descriptions": {
+        "clear-config-cache": "Clears merged config cache. Required for config changes to be applied."
+    }
+}

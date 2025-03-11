@@ -1,0 +1,60 @@
+parameters:
+  exclude_files:
+    - .*config.*
+  paths:
+    - ./src
+
+  layers:
+    - name: Domain
+      collectors:
+        - type: directory
+          value: /src/\w+(?:/\w+)?(?:/\w+)?/Domain/.*
+
+    - name: App
+      collectors:
+        - type: directory
+          value: /src/\w+(?:/\w+)?(?:/\w+)?/App/.*
+
+    - name: Infra
+      collectors:
+        - type: directory
+          value: /src/\w+(?:/\w+)?(?:/\w+)?/Infra/.*
+
+    - name: DomainVendor
+      collectors:
+        - type: classLike
+          value: ^(Chronos\\Chronos|Brick\\Money\\Money|Btcbit\\Currency)\\.*
+
+    - name: Vendor
+      collectors:
+        - type: classLike
+          value: ^(Chronos\\Chronos|Brick\\Money\\Money|Btcbit\\Currency)\\.*
+
+  ruleset:
+    Domain:
+      - DomainVendor
+    App:
+      - Domain
+      - DomainVendor
+    Api:
+      - Domain
+      - App
+    Infra:
+      - Domain
+      - App
+      - Vendor
+  formatters:
+    graphviz:
+      point_to_groups: true
+      groups:
+        App:
+          - App
+        Domain:
+          - Domain
+          - DomainVendor
+        Infra:
+          - Infra
+          - Vendor
+        Api:
+          - Domain
+          - App

@@ -1,0 +1,12 @@
+parameters:
+  paths:
+    - ./src
+  exclude_files:
+    - 'Infra/Adapter'
+    - 'src/Api'
+  layers:
+    - name: ExampleModule
+      collectors:
+        - type: directory
+          value: src/Module/ExampleModule/src/.*
+  ruleset: []
