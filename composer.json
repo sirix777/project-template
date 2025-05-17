@@ -26,7 +26,7 @@
         "mezzio/mezzio": "^3.20",
         "mezzio/mezzio-helpers": "^5.17",
         "mezzio/mezzio-laminasrouter": "^3.10",
-        "sirix/cycle-orm-factory": "^2.0",
+        "sirix/cycle-orm-factory": "^2.1",
         "sirix/money": "^1.0",
         "sirix/monolog": "^1.0",
         "sirix/sirix-config": "^1.0",

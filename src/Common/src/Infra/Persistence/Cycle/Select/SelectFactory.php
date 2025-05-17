@@ -40,6 +40,7 @@ readonly class SelectFactory
         /** @var Select<T> $select */
         $select = new Select($this->orm, $role);
 
+        // @phpstan-ignore-next-line
         if (! is_a($role, EntityInterface::class, true)) {
             throw new InvalidArgumentException('Invalid entity class');
         }

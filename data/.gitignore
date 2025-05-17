@@ -3,6 +3,8 @@
 !db/cycle
 !db/cycle/migrations
 !db/cycle/migrations/*
+!db/cycle/seeds
+!db/cycle/seeds/*
 !cache
 !cache/.gitkeep
 !.gitignore

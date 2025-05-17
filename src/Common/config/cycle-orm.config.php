@@ -32,6 +32,7 @@ return [
         'migrator' => [
             'directory' => 'data/db/cycle/migrations',
             'table' => 'migrations',
+            'seed-directory' => 'data/db/cycle/seeds',
         ],
         'entities' => [
             'src/Module/ExampleModule/src/Infra',

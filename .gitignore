@@ -8,3 +8,4 @@
 /vendor/
 .php-cs-fixer.cache
 .deptrac.cache
+composer.lock
