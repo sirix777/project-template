@@ -8,8 +8,6 @@
             "homepage": "https://github.com/sirix777"
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "php": "~8.4.0",
         "cakephp/chronos": "^3.1",
@@ -43,6 +41,8 @@
         "qossmic/deptrac": "^2.0",
         "roave/security-advisories": "dev-master"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "ApiGateway\\": "src/ApiGateway/src/",
@@ -74,12 +74,17 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "@clear-config-cache",
             "if [ ! -d \"tools/php-cs-fixer/vendor\" ]; then composer install --working-dir=tools/php-cs-fixer; fi",
             "if [ ! -d \"tools/phpstan/vendor\" ]; then composer install --working-dir=tools/phpstan; fi",
-            "if [ ! -d \"tools/rector/vendor\" ]; then composer install --working-dir=tools/rector; fi"
+            "if [ ! -d \"tools/rector/vendor\" ]; then composer install --working-dir=tools/rector; fi",
+            "@clear-config-cache"
         ],
-        "post-update-cmd": "@clear-config-cache",
+        "post-update-cmd": [
+            "if [ ! -d \"tools/php-cs-fixer/vendor\" ]; then composer install --working-dir=tools/php-cs-fixer; fi",
+            "if [ ! -d \"tools/phpstan/vendor\" ]; then composer install --working-dir=tools/phpstan; fi",
+            "if [ ! -d \"tools/rector/vendor\" ]; then composer install --working-dir=tools/rector; fi",
+            "@clear-config-cache"
+        ],
         "post-create-project-cmd": [
             "@development-enable"
         ],
